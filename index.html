@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div data-component="main" data-text="Inicializando texto"></div>
+  <div data-component="main" data-text="Inicializando texto"></div>
+
+
+    <script type="importmap">
+    {
+      "imports": {
+        "htm": "https://ga.jspm.io/npm:htm@3.1.1/dist/htm.module.js"
+      }
+    }
+    </script>
+    
+    <!-- ES Module Shims: Import maps polyfill for modules browsers without import maps support (all except Chrome 89+) -->
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js" crossorigin="anonymous"></script>
+
+  <script src="./src/main.js" type="module"></script>
+</body>
+</html>
