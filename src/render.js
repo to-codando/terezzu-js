@@ -1,4 +1,4 @@
-import { observerFactory } from "./observer.js"
+import { observerFactory } from "./observer.factory.js"
 import { html, css } from "./tagged.function.js"
 import { hooksFactory } from "./hooks.factory.js"
 import { pubsubFactory } from "./pubsub.factory.js"

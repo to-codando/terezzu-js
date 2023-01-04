@@ -1,0 +1,16 @@
+{
+  "include": ["src/**/*", "index.js"],
+  "compilerOptions": {
+    "strict": true,
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["es2018", "dom"],
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "types",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames":true,
+  },
+}

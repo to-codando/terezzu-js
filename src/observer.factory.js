@@ -42,7 +42,7 @@ export const observerFactory = (value) => {
 
   const handlers = (payload) => {
     if(payload && Array.isArray(payload)) {
-      _handlers = [...payload ]
+      _handlers = [...payload]
       return _handlers
     }
     

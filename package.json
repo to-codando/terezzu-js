@@ -1,0 +1,31 @@
+{
+  "name": "dew",
+  "version": "0.0.1",
+  "description": "Dawn JS (Core) is a library for creating agnostic javascript components.",
+  "main": "index.js",
+  "types": "types",
+  "directories": {
+    "lib": "src"
+  },
+  "scripts": {
+    "build": "pnpm clean && tsc --build",
+    "clean": "tsc --build --clean",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/to-codando/dew-js.git"
+  },
+  "keywords": [
+    "dew js",
+    "dew-js",
+    "dew javascript",
+    "reactive javascript library"
+  ],
+  "author": "Rodrigo Rocha",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/to-codando/dew-js/issues"
+  },
+  "homepage": "https://github.com/to-codando/dew-js#readme"
+}
