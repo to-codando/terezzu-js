@@ -1,13 +1,13 @@
-# Apresentando DewJS
+# Apresentando TerezzuJs
 
-Dew JS é uma micro-biblioteca de padrões reativos para construção de componentes javascript.
+TerezzuJs é uma micro-biblioteca de padrões reativos para construção de componentes javascript.
 
-A idéia por trás de Dew é utilizar padrões simples, eficazes e amplamente conhecidos na construção
+A idéia por trás de Terezzu é utilizar padrões simples, eficazes e amplamente conhecidos na construção
 de interfaces de aplicações modernas.
 
 ## Estrutura de componentes
 
-Dew JS permite criar componentes reativos que se mantém completamente desacoplados mesmo trabalhando
+TerezzuJs permite criar componentes reativos que se mantém completamente desacoplados mesmo trabalhando
 constantemente em conjunto para formar interfaces complexas.
 
 Os componentes são definidos através do padrão MVC e as reações de alteração de estados são geridas
@@ -15,25 +15,24 @@ através de stores de observadores.
 
 ### VIEW
 
-No Dew JS a view é exatamente o que representa o V do padrão MVC.
+No TerezzuJs a view é exatamente o que representa o V do padrão MVC.
 
 É na view que definimos a estrutura HTML dos componentes e os eventos de interação.
 
 ```js
-  export const view = ({ html, css, controller }) => {
+export const view = ({ html, css, controller }) => {
+  const template = ({ state }) => html`
+    <h1 onClick=${controller.logger}>Hello TerezzuJs!</h1>
+  `
 
-    const template = ({ state }) => html`
-      <h1 onClick=${controller.logger}>
-        Hello Dew JS!
-      </h1>
-    `
+  const styles = () => css`
+    h1 {
+      color: red;
+    }
+  `
 
-    const styles = () => css`
-      h1 { color: red }
-    `
-
-    return { template, styles }
-  }
+  return { template, styles }
+}
 ```
 
 > Os parametros HTML e CSS são funções tag capazes de criar elementos HTML e aplicar CSS, além de ajudar no hightlight do código escrito.
@@ -49,31 +48,28 @@ Dentro da função template o state é recebido como parâmetro e pode ser utili
 O módel é apenas uma factory function que prove acesso a store observável do componente.
 
 ```js
-  export const model = ( state ) => {
+export const model = (state) => {
+  state.merge({
+    title: 'Estádo inicial'
+  })
 
-    state.merge({
-      title: 'Estádo inicial'
-    })
+  const getState = () => state.get()
 
-    const getState = () => state.get()
+  const setState = (payload) => state.set({ ...payload })
 
-    const setState = (payload) => state.set({ ...payload })
-
-    return {
-      getState,
-      setState
-    }
+  return {
+    getState,
+    setState
   }
+}
 ```
-
 
 ### Controller
 
-O controller faz a ponte a view e o módel á que no padrão MVC a view não conhece o módel e apesar de em Dew, a view ter acesso ao state da aplicação como somente leitura, o estado não pode ser alterado diretamente, apenas através do intermédio do controller.
+O controller faz a ponte a view e o módel á que no padrão MVC a view não conhece o módel e apesar de em Terezzu, a view ter acesso ao state da aplicação como somente leitura, o estado não pode ser alterado diretamente, apenas através do intermédio do controller.
 
 ```js
 export const controller = ({ model, hooks, eventDrive }) => {
-
   hooks.beforeOnInit(() => dispatch('onLoad', { loaded: true }))
 
   const dispatch = (eventName, payload) => eventDrive.emit(eventName, payload)
@@ -84,7 +80,6 @@ export const controller = ({ model, hooks, eventDrive }) => {
     const { title } = model.getState()
     return title.toUpperCase()
   }
-
 }
 ```
 
@@ -92,14 +87,13 @@ export const controller = ({ model, hooks, eventDrive }) => {
 
 ### Model, Hooks e eventDrive
 
-* Através do objeto módel é possível inscrever-se para notar mudanças no estado.
-* Por meios dos hooks é possível detectar eventos do ciclo de vida do componente e executar métodos específicos para cada trecho do ciclo de vida do componente.
-* Através do eventDrive é possível trocar informações com outros componentes através de eventos pubsub.
+- Através do objeto módel é possível inscrever-se para notar mudanças no estado.
+- Por meios dos hooks é possível detectar eventos do ciclo de vida do componente e executar métodos específicos para cada trecho do ciclo de vida do componente.
+- Através do eventDrive é possível trocar informações com outros componentes através de eventos pubsub.
 
 ### A peça completa
 
 Depois de definir cada uma das partes do componente (model, view e controller) é preciso juntar tudo para formar a estrutura do componente.
-
 
 ```js
 import { model } from './model'
@@ -107,23 +101,25 @@ import { view } from './view'
 import { controller } from './controller'
 
 export const appHello = (state) => ({
-	state, model, view, controller
+  state,
+  model,
+  view,
+  controller
 })
 ```
 
 Como observou, basta importar as dependências do componente e exportar uma função que identifica o componente em construção.
 
-A função do componente deve retornar model, view e controller e a propriedade adicional state fornecida por Dew JS para facilitar na hora de criar um estado observável.
+A função do componente deve retornar model, view e controller e a propriedade adicional state fornecida por TerezzuJs para facilitar na hora de criar um estado observável.
 
 ### Renderizando componentes
 
-Para renderizar um componente, certifique-se de importar o render do Dew JS e os componentes a serem renderizados
+Para renderizar um componente, certifique-se de importar o render do TerezzuJs e os componentes a serem renderizados
 
 ```js
-import { render } from 'dew'
+import { render } from 'Terezzu'
 import { appMain } from './components/main/index.js'
 import { appHello } from './components/hello/index.js'
-
 
 render(appMain, 'main', (appMainElement) => {
   render(appHeader, 'header', null, appMainElement)
@@ -152,57 +148,50 @@ Acima, um código que se parece com a estrutura do método render que injeta um 
 
 Observe os dois últimos parâmetros (callback, contextElement).
 
-* Callback - É uma função que deve ser executada após o componente ser renderizado.
-* ContextElement - É o contexto onde o componente será relacionado a um element host.
+- Callback - É uma função que deve ser executada após o componente ser renderizado.
+- ContextElement - É o contexto onde o componente será relacionado a um element host.
 
 ### Propriedades de dados
 
 Os compoentes podem carregar propriedades dinâmicamente através do HTML.
 
 ```js
-  const menuList = () => ([ 'Home', 'Contato', 'Blog'])
+const menuList = () => ['Home', 'Contato', 'Blog']
 
-  const template = () => html`
-    <AppMenu data-list=${menuList} />
-  `
+const template = () => html` <AppMenu data-list=${menuList} /> `
 ```
 
 No exemplo acima, uma lista está sendo injetada no componente AppMenu através do dataset "data-list".
 
-
 ```js
-  const view = ({ html, controller }) => {
-    const menuItems = controller.getMenuItems()
+const view = ({ html, controller }) => {
+  const menuItems = controller.getMenuItems()
 
-    const template = () => html`
-      <ul>
-        ${menuItems.map( item => html`
-          <li>${item}</li>`
-          )}
-      </ul>
-    `
+  const template = () => html`
+    <ul>
+      ${menuItems.map((item) => html` <li>${item}</li>`)}
+    </ul>
+  `
 
-    return { template }
-  }
+  return { template }
+}
 ```
 
 No trecho acima, o controller recupera do dataset contendo a lista do menu e a retorna através do método getMenuItems. Então, a variável menuItems pode ser iterada e a lista do menu exibida.
 
-
 ```js
-  const controller = ({ model, props }) => {
-    const getMenuItems = () => {
-      return JSON.parse(props.list)
-    }
-
-    return { getMenuItem }
+const controller = ({ model, props }) => {
+  const getMenuItems = () => {
+    return JSON.parse(props.list)
   }
+
+  return { getMenuItem }
+}
 ```
 
 O controller do componente se parece com o trecho de código acima.
 
 Observe que foi necessário fazer uso de JSON.parse para converter o dataset em um objeto javascript.
-
 
 ### Hooks e eventos
 
@@ -210,7 +199,6 @@ Os hooks e eventos podem ser usados para observar o ciclo de vida do componente 
 
 ```js
 export const controller = ({ model, hooks, eventDrive }) => {
-
   hooks.beforeOnInit(() => dispatch('onLoad', { loaded: true }))
 
   const dispatch = (eventName, payload) => eventDrive.emit(eventName, payload)
@@ -221,18 +209,17 @@ export const controller = ({ model, hooks, eventDrive }) => {
     const { title } = model.getState()
     return title.toUpperCase()
   }
-
 }
 ```
 
 Os hooks podem ser usados para reagir aos eventos do ciclo de vida do componente sempre que necessário.
 
-* beforeOnInit - Pode executar observadores antes de iniciar o componente
-* afterOnInit - Pode executar observadores após de iniciar o componente
-* beforeOnRender - Pode executar observadores antes de renderizar o componente
-* afterOnRender - Pode executar observadores depois de renderizar o componente
+- beforeOnInit - Pode executar observadores antes de iniciar o componente
+- afterOnInit - Pode executar observadores após de iniciar o componente
+- beforeOnRender - Pode executar observadores antes de renderizar o componente
+- afterOnRender - Pode executar observadores depois de renderizar o componente
 
-*Ex:*
+_Ex:_
 
 ```js
 export const controller = ({ hooks }) => {
@@ -247,12 +234,6 @@ o Objeto eventDrive disponibiliza os métodos on, emit, off para inscrever-se pa
 
 Para emitir um evento é necessário observar que, o primeiro parâmetro do método emit é o nome do evento e o segundo um objeto contendo o valor a ser transmitido através do evento disparado.
 
-
 ### Conclusão
 
-Pronto, esse é o básico que você precisa para criar aplicações com Dew JS, mas, também é tudo.
-
-
-
-
-
+Pronto, esse é o básico que você precisa para criar aplicações com TerezzuJs, mas, também é tudo.

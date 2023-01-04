@@ -1,7 +1,7 @@
 {
-  "name": "dew",
+  "name": "terezzu",
   "version": "0.0.1",
-  "description": "Dawn JS (Core) is a library for creating agnostic javascript components.",
+  "description": "Terezzu JS (Core) is a library for creating agnostic javascript components.",
   "main": "index.js",
   "types": "types",
   "directories": {
@@ -14,18 +14,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/to-codando/dew-js.git"
+    "url": "git+git@github.com:to-codando/terezzu-js.git"
   },
   "keywords": [
-    "dew js",
-    "dew-js",
-    "dew javascript",
+    "terezzu js",
+    "terezzu-js",
+    "terezzu javascript",
     "reactive javascript library"
   ],
   "author": "Rodrigo Rocha",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/to-codando/dew-js/issues"
+    "url": "https://github.com/to-codando/terezzu-js/issues"
   },
-  "homepage": "https://github.com/to-codando/dew-js#readme"
+  "homepage": "https://github.com/to-codando/terezzu-js#readme"
 }
