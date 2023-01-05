@@ -27,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/to-codando/terezzu-js/issues"
   },
-  "homepage": "https://github.com/to-codando/terezzu-js#readme"
+  "homepage": "https://github.com/to-codando/terezzu-js#readme",
+  "dependencies": {
+    "htm": "^3.1.1"
+  }
 }
