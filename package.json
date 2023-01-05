@@ -1,6 +1,6 @@
 {
   "name": "terezzu",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Terezzu JS (Core) is a library for creating agnostic javascript components.",
   "main": "index.js",
   "types": "types",
@@ -28,7 +28,7 @@
     "url": "https://github.com/to-codando/terezzu-js/issues"
   },
   "homepage": "https://github.com/to-codando/terezzu-js#readme",
-  "dependencies": {
+  "peerDependencies": {
     "htm": "^3.1.1"
   }
 }
