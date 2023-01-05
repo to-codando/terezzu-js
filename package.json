@@ -1,8 +1,8 @@
 {
   "name": "terezzu",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Terezzu JS (Core) is a library for creating agnostic javascript components.",
-  "main": "src/index.js",
+  "main": "index.js",
   "types": "types",
   "directories": {
     "lib": "src"
