@@ -17,5 +17,5 @@
   "files": ["browser.d.ts"],
   "include": [
     "./src/*.js"
-  ]
+  ],
 }
