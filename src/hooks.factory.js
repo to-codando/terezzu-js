@@ -4,25 +4,30 @@ export const hooksFactory = () => {
   const eventDrive = pubsubFactory()
 
   const beforeOnRender = (callback) => {
-    eventDrive.on("beforeOnRender", callback)
+    eventDrive.on('beforeOnRender', callback)
   }
 
   const afterOnRender = (callback) => {
-    eventDrive.on("afterOnRender", callback)
+    eventDrive.on('afterOnRender', callback)
   }
 
   const onInit = (callback) => {
-		eventDrive.on("onInit", callback)
-	}
+    eventDrive.on('onInit', callback)
+  }
+
+  const onDestroy = (callback) => {
+    eventDrive.on('onDestroy', callback)
+  }
 
   const emit = (eventName, payload) => {
-    eventDrive.emit( eventName, payload)
+    eventDrive.emit(eventName, payload)
   }
 
   return {
-		beforeOnRender,
-		afterOnRender,
-		onInit,
-		emit,
-	}
+    beforeOnRender,
+    afterOnRender,
+    onDestroy,
+    onInit,
+    emit
+  }
 }

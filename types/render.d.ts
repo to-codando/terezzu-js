@@ -48,9 +48,30 @@ interface IComponent {
 	controller: IController;
 }
 
+interface IPubsubHandler {
+	<T>(arg: T): void;
+}
+
+interface IPubsubSubscriber {
+	eventName: string;
+	handler: IPubsubHandler
+}
+
+interface IEvent<T> {
+	eventName: string;
+	payload: IObject<T>;
+}
+
+interface IPubsub {
+	on: (eventName: string, handler: IPubsubHandler) => IPubsubSubscriber
+	off: ({ eventName, handler }: IPubsubSubscriber) => void
+	emit: <T>(event: IEvent<T>) => void
+}
+
+export const eventDrive: IPubsub;
+
 export function render(
 	componentFactory: <T>(state: IObserver<T>) => IComponent,
-	selector: string,
-	callback?: (element: HTMLElement) => void,
-	context?: HTMLElement
+	context?: HTMLElement,
+	callback?: (element: HTMLElement) => void
 ): void
