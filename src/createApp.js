@@ -1,32 +1,25 @@
 import { render, eventDrive } from './render.js'
 import { router } from './router.js'
 
-export const createApp = ({ appMain, routes }) => {
+export const createApp = ({ mount }) => {
   let _config = null
 
-  if (!appMain || typeof appMain !== 'function') {
-    const appMainNotExist = 'appMain not is a Terezzu component and must be.'
-    throw new Error(appMainNotExist)
+  if (!mount || typeof mount !== 'function') {
+    const mountFailMessage = 'mount method not is a function and must be.'
+    throw new Error(mountFailMessage)
   }
 
-  const mount = (target = document.body) => {
+  const mounter = (target = document.body) => {
     if (_config) return _config.mount()
-
-    if (routes && Array.isArray(routes)) {
-      return render(appMain, target, (context) => {
-        router({ routes, context }).init()
-      })
-    }
-
-    render(appMain, target)
+    mount(target)
   }
 
-  const unmount = () => {
+  const unmounter = () => {
     if (_config) return _config.unmount()
     eventDrive.emit('onDestroy', { destroy: true })
   }
 
-  const setup = (callback) => {
+  const setuper = (callback) => {
     if (!callback || typeof callback !== 'function') {
       const invalidSetup =
         'setup method is not a callback function and must be.'
@@ -44,5 +37,9 @@ export const createApp = ({ appMain, routes }) => {
     _config = callback(options)
   }
 
-  return { mount, unmount, setup }
+  return {
+    mount: mounter,
+    unmount: unmounter,
+    setup: setuper
+  }
 }
