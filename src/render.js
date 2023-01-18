@@ -146,10 +146,6 @@ const _componentCreator = (
   const props = observerFactory({})
   const hooks = hooksFactory()
 
-  eventDrive.on('onDestroy', () => {
-    element.remove()
-  })
-
   _setProps(props, element)
   hooks.afterOnRender(() => {
     if (callback && typeof callback === 'function') callback(element)
@@ -182,12 +178,14 @@ const _componentCreator = (
   _bindStyles(selector, _view, scopeId)
 
   hooks.emit('beforeOnRender', {})
+  element.innerHTML = ''
   element.insertAdjacentElement('afterbegin', templateElement)
 
   state.on(() => {
     hooks.emit('beforeOnRender', {})
     templateHTML = _view.template({ state: state.get(), props: props.get() })
     templateElement = _createElement(templateHTML, props, scopeId)
+    element.innerHTML = ''
     element.insertAdjacentElement('afterbegin', templateElement)
     hooks.emit('afterOnRender', {})
   })

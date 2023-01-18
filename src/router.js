@@ -6,8 +6,7 @@ export const router = ({ routes = [], context = null }) => {
 
   const _bindListeners = () => {
     window.addEventListener('hashchange', () => {
-      eventDrive.emit('onDestroy', { destroy: true, action: _mountRouteByHash })
-
+      eventDrive.emit('onDestroy', { destroy: true })
       _mountRouteByHash()
     })
   }
