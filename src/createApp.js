@@ -1,7 +1,7 @@
 import { render, eventDrive } from './render.js'
 import { router } from './router.js'
 
-export const createApp = ({ mount }) => {
+export const createApp = ({ appName, mount }) => {
   let _config = null
 
   if (!mount || typeof mount !== 'function') {
@@ -27,9 +27,7 @@ export const createApp = ({ mount }) => {
     }
 
     const options = {
-      appMain,
       router,
-      routes,
       render,
       eventDrive
     }
@@ -38,6 +36,7 @@ export const createApp = ({ mount }) => {
   }
 
   return {
+    name: appName,
     mount: mounter,
     unmount: unmounter,
     setup: setuper

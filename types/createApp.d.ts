@@ -101,9 +101,9 @@ interface ISetupOptions {
   eventDrive: IPubsub
 }
 
-interface IAppParams {
-  appMain: IComponent;
-  routes: IRoutes;
+interface ICreateAppParams {
+  appName: string;
+  mount: (target: HTMLElement) => void;
 }
 
 interface IAppConfig {
@@ -118,4 +118,4 @@ interface IApp {
   setup: (callback: () => IAppConfig) => void;
 }
 
-export function createApp(params: IAppParams): IApp
+export function createApp(params: ICreateAppParams): IApp
