@@ -15,7 +15,7 @@ export const router = ({ routes = [], context = null }) => {
     }
   }
 
-  const _isComoponentType = (module) => {
+  const _isComponentType = (module) => {
     if (module && typeof module === 'function') {
       return module()?.type === 'component'
     }
@@ -23,7 +23,7 @@ export const router = ({ routes = [], context = null }) => {
   }
 
   const _isInvalidType = (module) => {
-    return !_isComoponentType(module) && !_isAppType(module)
+    return !_isComponentType(module) && !_isAppType(module)
   }
 
   const _bindListeners = () => {
@@ -75,7 +75,7 @@ export const router = ({ routes = [], context = null }) => {
     )
 
     execute(
-      () => _isComoponentType(module),
+      () => _isComponentType(module),
       () => render(module, _routerElement, children)
     )
 
