@@ -1,3 +1,7 @@
+type ComponentType = 'component';
+type AppType = 'app';
+type RoutingType = ComponentType|AppType;
+
 interface IObject<T> {
 	[key: string]: T;
 }
@@ -61,7 +65,8 @@ interface IRoutes {
 
 interface IRouterParams {
   routes: IRoutes;
-  context: HTMLElement
+  context: HTMLElement;
+  type?: RoutingType;
 }
 
 interface IRouterResponse {

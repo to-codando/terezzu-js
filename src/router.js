@@ -1,8 +1,21 @@
 import { render, eventDrive } from './render.js'
 
-export const router = ({ routes = [], context = null }) => {
+export const router = ({ routes = [], context = null, type = 'component' }) => {
   const _routes = [...routes]
+  const validTypes = ['component', 'app']
   let _routerElement = null
+
+  const execute = (validator, callback, errorMessage) => {
+    if (validator()) return callback(validator())
+    if (errorMessage) throw new Error(errorMessage)
+  }
+
+  const _isValidType = (typeValue) =>
+    validTypes.some((typeItem) => typeItem === typeValue)
+
+  const _isType = (typeValue) => {
+    return validTypes.includes(typeValue) && typeValue === type
+  }
 
   const _bindListeners = () => {
     window.addEventListener('hashchange', () => {
@@ -35,13 +48,32 @@ export const router = ({ routes = [], context = null }) => {
     parentElement.insertAdjacentElement('beforeend', componentElement)
   }
 
-  const _mountRouteByHash = (hash = null) => {
+  const _mountRouteByHash = async (hash = null) => {
     const hashValue = hash || window.location.hash || ''
     const route = _getRouteByHash(hashValue) || _getRouteDefault()
-    const { component, children } = route.mount()
+    const { component, children } = await route.mount()
     const buildStyles = true
+
     _createComponentElement(_routerElement, component.name)
-    render(component, _routerElement, children, buildStyles)
+
+    execute(
+      () => !_isValidType(type),
+      () => {
+        throw new Error(
+          'router param type in not "component" or "app" and must be.'
+        )
+      }
+    )
+
+    execute(
+      () => _isType('component'),
+      () => render(component, _routerElement, children, buildStyles)
+    )
+
+    execute(
+      () => _isType('app'),
+      () => component.mount()
+    )
   }
 
   const _getHash = () => window.location.hash
