@@ -46,7 +46,6 @@ const _createElement = (HTM, props, scopeId) => {
   })
 
   if (element?.classList?.value && scopeId) {
-    console.log(element.classList.value)
     element.classList.value = _applyContext(element.classList.value, scopeId)
   }
 

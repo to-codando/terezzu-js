@@ -1,10 +1,13 @@
-export const createComponent = ({ model, view, controller }) => {
+export const createComponent = ({ name, model, view, controller }) => {
   const type = 'component'
-  return (state) => ({
-    type,
-    state,
-    model,
-    view,
-    controller
-  })
+  const component = {
+    [name]: (state) => ({
+      type,
+      state,
+      model,
+      view,
+      controller
+    })
+  }
+  return component[name]
 }

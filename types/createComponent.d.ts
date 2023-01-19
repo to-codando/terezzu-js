@@ -42,6 +42,7 @@ interface IViewProps {
 }
 
 interface IComponent {
+  type: string;
 	state: IObserver;
 	model: <T>(state: IObserver<T>) => IModel;
 	view: ({ html, css, controller }: IViewProps) => IView;
@@ -68,20 +69,14 @@ interface IPubsub {
 	emit: <T>(event: IEvent<T>) => void
 }
 
-
 interface IParamsCreateComponent {
   model: IModel,
   view: IView,
   controller: IController
 }
 
-
 interface ICreateComponentResponse {
-  type: string;
-  state: IObserver;
-  model: IModel;
-  view: IView;
-  controller: IController;
+  (state: IObserver): IComponent
 }
 
 export function createComponent(
