@@ -46,7 +46,8 @@ const _createElement = (HTM, props, scopeId) => {
   })
 
   if (element?.classList?.value && scopeId) {
-    element.classList.value = `${scopeId}-${element.classList.value}`
+    console.log(element.classList.value)
+    element.classList.value = _applyContext(element.classList.value, scopeId)
   }
 
   return element
@@ -88,8 +89,8 @@ const random = () =>
 const createID = () => `${random()}`
 
 const _applyContext = (text, id) => {
-  let textContent = text.replace(/\[scope\]/gi, `[scope=${id}]`)
-  return textContent.replace(/\D\.+(\w+)/gi, `.${id}-$1`)
+  const textContent = text.replace(/ctx/gi, `${id}`)
+  return textContent.replace(/\[scope\]/gi, `[scope=${id}]`)
 }
 
 const _createSelector = (text) =>
