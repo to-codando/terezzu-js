@@ -66,7 +66,6 @@ interface IRoutes {
 interface IRouterParams {
   routes: IRoutes;
   context: HTMLElement;
-  type?: RoutingType;
 }
 
 interface IRouterResponse {

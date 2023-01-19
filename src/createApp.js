@@ -36,6 +36,7 @@ export const createApp = ({ appName, mount }) => {
   }
 
   return {
+    type: 'app',
     name: appName,
     mount: mounter,
     unmount: unmounter,

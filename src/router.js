@@ -1,8 +1,7 @@
 import { render, eventDrive } from './render.js'
 
-export const router = ({ routes = [], context = null, type = 'component' }) => {
+export const router = ({ routes = [], context = null }) => {
   const _routes = [...routes]
-  const validTypes = ['component', 'app']
   let _routerElement = null
 
   const execute = (validator, callback, errorMessage) => {
@@ -10,11 +9,21 @@ export const router = ({ routes = [], context = null, type = 'component' }) => {
     if (errorMessage) throw new Error(errorMessage)
   }
 
-  const _isValidType = (typeValue) =>
-    validTypes.some((typeItem) => typeItem === typeValue)
+  const _isAppType = (module) => {
+    if (module && typeof module === 'object') {
+      return module.type === 'app'
+    }
+  }
 
-  const _isType = (typeValue) => {
-    return validTypes.includes(typeValue) && typeValue === type
+  const _isComoponentType = (module) => {
+    if (module && typeof module === 'function') {
+      return module()?.type === 'component'
+    }
+    return false
+  }
+
+  const _isInvalidType = (module) => {
+    return !_isComoponentType(module) && !_isAppType(module)
   }
 
   const _bindListeners = () => {
@@ -51,13 +60,13 @@ export const router = ({ routes = [], context = null, type = 'component' }) => {
   const _mountRouteByHash = async (hash = null) => {
     const hashValue = hash || window.location.hash || ''
     const route = _getRouteByHash(hashValue) || _getRouteDefault()
-    const { component, children } = await route.mount()
+    const { component: module, children } = await route.mount()
     const buildStyles = true
 
-    _createComponentElement(_routerElement, component.name)
+    _createComponentElement(_routerElement, module.name)
 
     execute(
-      () => !_isValidType(type),
+      () => _isInvalidType(module),
       () => {
         throw new Error(
           'router param type in not "component" or "app" and must be.'
@@ -66,13 +75,13 @@ export const router = ({ routes = [], context = null, type = 'component' }) => {
     )
 
     execute(
-      () => _isType('component'),
-      () => render(component, _routerElement, children, buildStyles)
+      () => _isComoponentType(module),
+      () => render(module, _routerElement, children)
     )
 
     execute(
-      () => _isType('app'),
-      () => component.mount()
+      () => _isAppType(module),
+      () => module.mount()
     )
   }
 

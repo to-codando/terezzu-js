@@ -113,6 +113,8 @@ interface IAppConfig {
 }
 
 interface IApp {
+  type: string;
+  name: string;
   mount: (target?: HTMLElement) => void;
   unmount: () => void;
   setup: (callback: () => IAppConfig) => void;
