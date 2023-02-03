@@ -7,7 +7,10 @@ de interfaces de aplicações modernas.
 
 ## Instalação
 
-``` npm i terezzu ```
+Instalar Terezzu para começar a desenvolver seus micro-serviços front end é rápido e fácil.
+``` 
+npm i terezzu 
+```
 
 ## Estrutura de componentes
 
