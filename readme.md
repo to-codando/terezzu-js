@@ -5,6 +5,10 @@ TerezzuJs é uma micro-biblioteca de padrões reativos para construção de comp
 A idéia por trás de Terezzu é utilizar padrões simples, eficazes e amplamente conhecidos na construção
 de interfaces de aplicações modernas.
 
+## Instalação
+
+``` npm i terezzu ```
+
 ## Estrutura de componentes
 
 TerezzuJs permite criar componentes reativos que se mantém completamente desacoplados mesmo trabalhando
